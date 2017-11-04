@@ -1,7 +1,7 @@
-pragma solidity ^0.4.15;
+pragma solidity ^0.4.17;
 
 contract AbstractMintableToken {
-    function mintFromTrustedContract(address _to, uint256 _amount) returns (bool);
+    function mintFromTrustedContract(address _to, uint256 _amount) public returns (bool);
 }
 
 /**
@@ -35,7 +35,7 @@ contract Ownable {
      * @dev Allows the current owner to transfer control of the contract to a newOwner.
      * @param newOwner The address to transfer ownership to.
      */
-    function transferOwnership(address newOwner) onlyOwner {
+    function transferOwnership(address newOwner) public onlyOwner {
         if (newOwner != address(0)) {
             owner = newOwner;
         }
@@ -57,7 +57,7 @@ contract RegistrationBonus is Ownable {
         token = AbstractMintableToken(tokenAddr);
     }
 
-    function addBonusToken(address _beneficiary, uint _userId) onlyOwner returns (bool) {
+    function addBonusToken(address _beneficiary, uint _userId) public onlyOwner returns (bool) {
         require(beneficiaryAddresses[_beneficiary] == 0);
         require(beneficiaryUserIds[_userId] == 0);
 
