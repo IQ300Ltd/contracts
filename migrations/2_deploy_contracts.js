@@ -1,5 +1,5 @@
-var Iq300Token = artifacts.require("./Iq300Token.sol");
+var TempusToken = artifacts.require("./TempusToken.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(Iq300Token);
+  deployer.deploy(TempusToken);
 };
