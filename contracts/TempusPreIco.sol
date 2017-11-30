@@ -90,7 +90,7 @@ contract TempusPreIco is Ownable {
     uint public price = 0.005 ether / 1000;
 
     //max tokens could be sold during preico
-    uint public hardCap = 1000000000;
+    uint public hardCap = 750000000;
     uint public tokensSold = 0;
 
     bool public paused = false;
