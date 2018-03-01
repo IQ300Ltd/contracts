@@ -82,7 +82,7 @@ contract TempusToken {
 contract TempusIco is Ownable {
     using SafeMath for uint256;
 
-    uint public startTime = 1519894800; //1 March 2018 09:00:00 GMT
+    uint public startTime = 1519916400; //1 March 2018 15:00:00 GMT
 
     //initial token price
     uint public price0 = 0.005 ether / 1000;
@@ -90,18 +90,20 @@ contract TempusIco is Ownable {
     uint public price2 = price1 * 2;
     uint public price3 = price2 * 2;
     uint public price4 = price3 * 2;
+    uint public price5 = price4 * 2;
 
     //max tokens could be sold during ico
     uint public hardCap = 1000000000 * 1000;
     uint public tokensSold = 0;
-    uint[5] public tokensSoldInPeriod;
+    uint[6] public tokensSoldInPeriod;
 
     uint public periodDuration = 30 days;
 
-    uint public period0End = startTime + periodDuration;
-    uint public period1End = period0End + periodDuration;
-    uint public period2End = period1End + periodDuration;
-    uint public period3End = period2End + periodDuration;
+    uint public period0End = startTime + 31 days;
+    uint public period1End = period0End + 30 days;
+    uint public period2End = period1End + 31 days;
+    uint public period3End = period2End + 30 days;
+    uint public period4End = period3End + 31 days;
 
     bool public paused = false;
 
@@ -137,7 +139,10 @@ contract TempusIco is Ownable {
         if(now < period3End) {
             return 3;
         }
-        return 4;
+        if(now < period4End) {
+            return 4;
+        }
+        return 5;
     }
 
     function priceByPeriod() public view returns (uint price) {
@@ -154,7 +159,10 @@ contract TempusIco is Ownable {
         if(periodNum == 3) {
             return price3;
         }
-        return price4;
+        if(periodNum == 4) {
+            return price4;
+        }
+        return price5;
     }
 
     /**
@@ -225,21 +233,29 @@ contract TempusIco is Ownable {
             period1End = period0End + periodDuration;
             period2End = period1End + periodDuration;
             period3End = period2End + periodDuration;
+            period4End = period3End + periodDuration;
             return;
         }
         if(periodNum == 1) {
             period1End = now;
             period2End = period1End + periodDuration;
             period3End = period2End + periodDuration;
+            period4End = period3End + periodDuration;
             return;
         }
         if(periodNum == 2) {
             period2End = now;
             period3End = period2End + periodDuration;
+            period4End = period3End + periodDuration;
             return;
         }
         if(periodNum == 3) {
             period3End = now;
+            period4End = period3End + periodDuration;
+            return;
+        }
+        if(periodNum == 4) {
+            period4End = now;
             return;
         }
     }
